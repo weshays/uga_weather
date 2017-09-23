@@ -29,5 +29,7 @@ class WeatherDataService
         average: row_data[5]
       }
     end
+    @data.shift
+    true
   end
 end
