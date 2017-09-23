@@ -1,1 +1,23 @@
-<%= @data =>
+<h1>Readings</h1>
+
+<table border="1">
+  <tr>
+    <th>Parameter</th>
+    <th>Max Reading</th>
+    <th>Max Time</th>
+    <th>Min Reading</th>
+    <th>Min Time</th>
+    <th>Average Reading</th>
+  </tr>
+
+  <% @readings.each do |reading| %>
+    <tr>
+      <td><%= reading.parameter %></td>
+      <td><%= reading.max_reading %></td>
+      <td><%= reading.max_time %></td>
+      <td><%= reading.min_reading %></td>
+      <td><%= reading.min_time %></td>
+      <td><%= reading.average_reading %></td>
+    </tr>
+  <% end %>
+</table>
