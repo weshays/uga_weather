@@ -15,6 +15,8 @@ class WeatherDataService
 
   def load_data_from_url
     @raw_data = open(@url) { |f| f.readlines }
+    @raw_data.shift
+    true
   end
 
   def parse_raw_data
@@ -29,7 +31,6 @@ class WeatherDataService
         average: row_data[5]
       }
     end
-    @data.shift
     true
   end
 end
