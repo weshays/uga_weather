@@ -1,9 +1,8 @@
 require 'open-uri'
 
 class WeatherDataService
-  def initialize
-    @url = 'http://weather.ggy.uga.edu/data/archive/daily/20090101.txt'
-    @data_date = DateTime.parse('2009-01-01')
+  def initialize(date)
+    @data_date = date
     @data = []
     @raw_data = ''
   end
@@ -14,8 +13,15 @@ class WeatherDataService
     @data
   end
 
+  private
+
+  def url
+    date_file = @data_date.strftime('%Y%m%d')
+    "http://weather.ggy.uga.edu/data/archive/daily/#{date_file}.txt"
+  end
+
   def load_data_from_url
-    @raw_data = open(@url) { |f| f.readlines }
+    @raw_data = open(url) { |f| f.readlines }
     @raw_data.shift
     true
   end

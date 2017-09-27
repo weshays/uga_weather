@@ -1,5 +1,14 @@
 <h1>Readings</h1>
 
+<h3>Data for: <%= @data_date.strftime('%m/%d/%Y') %></h3>
+
+<form action="/dashboard" method="get">
+  <input name="date" />
+  <input type="submit" />
+</form>
+
+<hr>
+
 <table border="1">
   <tr>
     <th>Parameter</th>
