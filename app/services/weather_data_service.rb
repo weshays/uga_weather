@@ -35,7 +35,7 @@ class WeatherDataService
         max_time: convert_to_datetime(row_data[2]),
         min_reading: row_data[3],
         min_time: convert_to_datetime(row_data[4]),
-        average_reading: row_data[5]
+        avg_reading: row_data[5]
       }
     end
     true

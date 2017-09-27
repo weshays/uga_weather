@@ -1,24 +1,21 @@
-# README
+# Tasks
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Database migration to create table to store weather data.
+  - You can use the image I sent you as a guide, or come up with your own way.
 
-Things you may want to cover:
+* Create ActiveRecord model for table.
 
-* Ruby version
+* Create service object to pull down and story data for all of 2016.
+  - If you want to do more years that is fine too.
 
-* System dependencies
+* Update frontend to include data for +/- 2 days.
+  - You can be creative with this
 
-* Configuration
+* Your controller must pull from the database.
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Load Data
+start_date = Date.parse('2016-01-01')
+end_date = Date.parse('2016-12-31')
+wdc = WeatherDataCacher.new(start_date, end_date)
+wdc.process

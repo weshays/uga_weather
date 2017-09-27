@@ -21,12 +21,12 @@
 
   <% @readings.each do |reading| %>
     <tr>
-      <td><%= reading.parameter %></td>
+      <td><%= reading.name %></td>
       <td><%= reading.max_reading %></td>
-      <td><%= reading.max_time %></td>
+      <td><%= friendly_time(reading.max_time) %></td>
       <td><%= reading.min_reading %></td>
-      <td><%= reading.min_time %></td>
-      <td><%= reading.average_reading %></td>
+      <td><%= friendly_time(reading.min_time) %></td>
+      <td><%= reading.avg_reading %></td>
     </tr>
   <% end %>
 </table>

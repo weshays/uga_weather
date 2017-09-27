@@ -6,5 +6,5 @@ class DailyMeasurement
   attribute :max_time, Time
   attribute :min_reading, Float
   attribute :min_time, Time
-  attribute :average_reading, Float
+  attribute :avg_reading, Float
 end

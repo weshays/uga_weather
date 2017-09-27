@@ -1,10 +1,7 @@
 class DashboardController < ApplicationController
   def show
-    @data_date = params[:date].present? ? Date.parse(params[:date]) : Date.today - 1.day
-    wds = WeatherDataService.new(@data_date)
-    @weather_data = wds.process
-    @readings = @weather_data.collect do |row|
-      DailyMeasurement.new(row)
-    end
+    @data_date = params[:date].present? ? Date.parse(params[:date]) : Date.parse('2016-04-01')
+    @readings = WeatherEntry.where('entered_on BETWEEN ? AND ?', @data_date - 2.days, @data_date + 2.days)
+                            .order('name ASC, entered_on ASC')
   end
 end
