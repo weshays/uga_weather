@@ -24,7 +24,10 @@ class ChartFormatter
                 .where('entered_on BETWEEN ? AND ?', @start_date, @end_date)
                 .group(:name)
                 .order('name ASC').collect do |weather_entry|
-      { name: weather_entry.name, path: "/dashboard?data_type=#{weather_entry.name}&#{date_param}" }
+      {
+        name: weather_entry.name,
+        path: "/dashboard?data_type=#{weather_entry.name}&#{date_param}"
+      }
     end
   end
 

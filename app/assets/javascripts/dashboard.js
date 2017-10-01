@@ -1,4 +1,5 @@
-var weatherData = function(info) {
+// var weatherData = function(info) {
+function weatherData (info) {
   Highcharts.chart('container', {
       title: {
         text: 'Weather Data: ' + info['start_date'] + ' to ' + info['end_date']
