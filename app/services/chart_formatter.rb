@@ -19,11 +19,12 @@ class ChartFormatter
   private
 
   def menu_options
+    date_param = "start_date=#{@start_date}&end_date=#{@end_date}"
     WeatherEntry.select(:name)
                 .where('entered_on BETWEEN ? AND ?', @start_date, @end_date)
                 .group(:name)
                 .order('name ASC').collect do |weather_entry|
-      { name: weather_entry.name, path: "/dashboard?data_type=#{weather_entry.name}" }
+      { name: weather_entry.name, path: "/dashboard?data_type=#{weather_entry.name}&#{date_param}" }
     end
   end
 
