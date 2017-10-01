@@ -1,32 +1,16 @@
 <h1>Readings</h1>
 
-<h3>Data for: <%= @data_date.strftime('%m/%d/%Y') %></h3>
-
 <form action="/dashboard" method="get">
-  <input name="date" />
-  <input type="submit" />
+  <h3>
+    Range
+    <input name="start_date" value="<%= @report[:start_date] %>" />
+    to
+    <input name="end_date" value="<%= @report[:end_date] %>" />
+    <input type="submit" />
+  </h3>
 </form>
 
 <hr>
 
-<table border="1">
-  <tr>
-    <th>Parameter</th>
-    <th>Max Reading</th>
-    <th>Max Time</th>
-    <th>Min Reading</th>
-    <th>Min Time</th>
-    <th>Average Reading</th>
-  </tr>
-
-  <% @readings.each do |reading| %>
-    <tr>
-      <td><%= reading.name %></td>
-      <td><%= reading.max_reading %></td>
-      <td><%= friendly_time(reading.max_time) %></td>
-      <td><%= reading.min_reading %></td>
-      <td><%= friendly_time(reading.min_time) %></td>
-      <td><%= reading.avg_reading %></td>
-    </tr>
-  <% end %>
-</table>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<%= javascript_tag "weatherData(#{@report.to_json})" %>
