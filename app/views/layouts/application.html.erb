@@ -13,11 +13,9 @@
   <body>
     <div id="menus">
       <ul>
-        <li>Menu 1</li>
-        <li>Menu 2</li>
-        <li>Menu 3</li>
-        <li>Menu 4</li>
-        <li>Menu 5</li>
+        <% @report[:menu].each do |menu_item| %>
+          <li><%= link_to(menu_item[:name], menu_item[:path]) %></li>
+        <% end %>
       </ul>
     </div>
     <div id="content">

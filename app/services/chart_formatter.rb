@@ -1,29 +1,53 @@
 class ChartFormatter
-  def initialize(start_date, end_date)
-    @start_date = dateify(start_date, (Date.today - 1.month).beginning_of_month)
-    @end_date = dateify(end_date, (Date.today - 1.month).end_of_month)
+  def initialize(options)
+    @start_date = dateify(options[:start_date], (Date.today - 1.month).beginning_of_month)
+    @end_date = dateify(options[:end_date], (Date.today - 1.month).end_of_month)
+    @data_type = options[:data_type] || menu_options.first[:name]
   end
 
   def process
     {
+      data_type: @data_type,
       start_date: @start_date,
       end_date: @end_date,
       categories: categories,
-      data: categories.size.times.collect { |i| i }
+      data: formatted_data,
+      menu: menu_options
     }
   end
 
   private
 
-  def categories
-    (@start_date...@end_date).collect { |date| date.to_s }
+  def menu_options
+    WeatherEntry.select(:name)
+                .where('entered_on BETWEEN ? AND ?', @start_date, @end_date)
+                .group(:name)
+                .order('name ASC').collect do |weather_entry|
+      { name: weather_entry.name, path: "/dashboard?data_type=#{weather_entry.name}" }
+    end
   end
-  #
-  # @readings = WeatherEntry.where('entered_on BETWEEN ? AND ?', @start_date, @end_date)
-  #                         .order('name ASC, entered_on ASC')
-  #
-  # @categories = (@start_date...@end_date).collect { |date| date.to_s }
-  #
+
+  def categories
+    (@start_date..@end_date).collect { |date| date.to_s }
+  end
+
+  def formatted_data
+    values = { min: [], avg: [], max: [] }
+    WeatherEntry.select(:min_reading, :avg_reading, :max_reading)
+                .where('entered_on BETWEEN ? AND ?', @start_date, @end_date)
+                .where(name: @data_type)
+                .order('entered_on ASC')
+                .each do |weather_entry|
+      values[:min] << weather_entry.min_reading
+      values[:avg] << weather_entry.avg_reading
+      values[:max] << weather_entry.max_reading
+    end
+    [
+      { name: 'Max Reading', data: values[:max] },
+      { name: 'Avg Reading', data: values[:avg] },
+      { name: 'Min Reading', data: values[:min] }
+    ]
+  end
 
   def dateify(date_str_or_obj, default_date = nil)
     retval = convert_to_date(date_str_or_obj.to_s)

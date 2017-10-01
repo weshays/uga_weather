@@ -1,4 +1,4 @@
-<h1>Readings</h1>
+<h1>Readings for <%= @report[:data_type] %></h1>
 
 <form action="/dashboard" method="get">
   <h3>
@@ -6,6 +6,7 @@
     <input name="start_date" value="<%= @report[:start_date] %>" />
     to
     <input name="end_date" value="<%= @report[:end_date] %>" />
+    <input type="hidden" name="data_type" value="<%= params[:data_type] %>" />
     <input type="submit" />
   </h3>
 </form>
